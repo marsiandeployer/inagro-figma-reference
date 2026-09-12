@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ручная сверка реализованных страниц ИНАГРО с соответствующими экранами Figma.">
+  <link rel="icon" href="data:,">
+  <title>Ручная сверка ИНАГРО — 12 экранов</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #2b2f33;
+      --muted: #72777d;
+      --line: #dce2db;
+      --paper: #f3f5f1;
+      --white: #fff;
+      --green: #439e35;
+      --green-dark: #2f7827;
+      --green-soft: #edf7ea;
+      --orange: #f8af00;
+      --shadow: 0 16px 40px rgba(43, 47, 51, .08);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 14px/1.45 Arial, sans-serif;
+    }
+    button, textarea { font: inherit; }
+    a { color: var(--green-dark); text-underline-offset: 3px; }
+    a:focus-visible, button:focus-visible, textarea:focus-visible {
+      outline: 3px solid rgba(67, 158, 53, .28);
+      outline-offset: 2px;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, .96);
+      backdrop-filter: blur(12px);
+    }
+    .bar {
+      max-width: 1500px;
+      margin: auto;
+      padding: 18px 24px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+    }
+    h1 { margin: 0 0 4px; font-size: 24px; line-height: 1.2; }
+    .subtitle, .meta, .node-id { color: var(--muted); }
+    .progress { min-width: 240px; }
+    .progress-line { display: flex; justify-content: space-between; margin-bottom: 7px; font-weight: 700; }
+    .track { height: 8px; overflow: hidden; border-radius: 999px; background: #e5ebe2; }
+    .fill { width: 0; height: 100%; background: var(--green); transition: width .2s ease; }
+    main { max-width: 1500px; margin: 24px auto 64px; padding: 0 24px; }
+    .tools { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+    .button, button {
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #b9c5b6;
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 0 14px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .button:hover, button:hover { border-color: var(--green); color: var(--green-dark); }
+    button:active { transform: translateY(1px); }
+    .group { margin-bottom: 36px; scroll-margin-top: 112px; }
+    .group-title {
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--ink);
+      font-size: 19px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+    .card.done { border-color: #a9d7a1; background: var(--green-soft); }
+    .card[hidden] { display: none; }
+    .screen-link {
+      position: relative;
+      display: block;
+      height: 300px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background: #e9ede7;
+    }
+    .screen-link::after {
+      content: "Открыть скрин";
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      padding: 7px 10px;
+      border-radius: 7px;
+      background: rgba(43, 47, 51, .88);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .screen-link img {
+      display: block;
+      width: 100%;
+      height: auto;
+      min-height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      transition: transform .25s ease;
+    }
+    .screen-link:hover img { transform: scale(1.012); }
+    .card-body { padding: 18px; }
+    .card-top { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; }
+    .number {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--orange);
+      color: #202326;
+      font-weight: 700;
+    }
+    .screen-name { margin: 0 0 4px; font-size: 17px; line-height: 1.35; }
+    .node-id { font-size: 12px; }
+    .links { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+    .links .button { flex: 1 1 190px; }
+    .figma-link { border-color: #bcaef2; }
+    .site-link { border-color: #a9d7a1; }
+    .review { display: grid; grid-template-columns: 118px 1fr; gap: 10px; align-items: start; }
+    .ready[aria-pressed="true"] { border-color: var(--green); background: var(--green); color: #fff; }
+    textarea {
+      width: 100%;
+      min-height: 64px;
+      resize: vertical;
+      border: 1px solid #b9c5b6;
+      border-radius: 8px;
+      padding: 9px 10px;
+      color: var(--ink);
+      background: #fff;
+    }
+    @media (max-width: 900px) {
+      .bar { grid-template-columns: 1fr; gap: 14px; }
+      .progress { min-width: 0; }
+      .cards { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 520px) {
+      .bar, main { padding-left: 16px; padding-right: 16px; }
+      h1 { font-size: 21px; }
+      .screen-link { height: 240px; }
+      .review { grid-template-columns: 1fr; }
+      .ready { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .fill, .screen-link img { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="bar">
+      <div>
+        <h1>Ручная сверка ИНАГРО</h1>
+        <div class="subtitle">12 экранов: точный фрейм Figma, скрин макета и соответствующая реализованная страница.</div>
+      </div>
+      <div class="progress" aria-live="polite">
+        <div class="progress-line"><span>Проверено</span><span id="progress-text">0 из 12</span></div>
+        <div class="track"><div class="fill" id="progress-fill"></div></div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="tools">
+      <a class="button" href="https://www.figma.com/design/jYm5eXVZnvn9LRjEDPr7fR/ИНАГРО--Copy-?node-id=0-1" target="_blank" rel="noopener">Открыть весь файл Figma</a>
+      <button type="button" id="show-all">Показать все</button>
+      <button type="button" id="show-pending">Только непроверенные</button>
+      <button type="button" id="export-json">Скачать JSON</button>
+    </div>
+    <div id="list"></div>
+  </main>
+  <script>
+    const figmaBase = 'https://www.figma.com/design/jYm5eXVZnvn9LRjEDPr7fR/ИНАГРО--Copy-?node-id=';
+    const siteBase = 'https://inagro.wpmix.net';
+    const groups = [
+      ['Веб — 1537 px', [
+        ['01 ИНАГРО Главная', '5:6306', 'assets/01-desktop.webp', '/'],
+        ['03 ИНАГРО Продукция ингредиенты', '5:610', 'assets/03-desktop.webp', '/ingredients/'],
+        ['04 ИНАГРО Продукция замороженная', '5:1232', 'assets/04-desktop.webp', '/frozen-products/'],
+        ['09 ИНАГРО Контакты', '5:3658', 'assets/09-desktop.webp', '/contacts/'],
+        ['10 ИНАГРО Решения снабжение кондитерских 1', '5:3985', 'assets/10-desktop.webp', '/solutions/confectionery/'],
+        ['11 ИНАГРО Наши партнеры', '5:5562', 'assets/11-desktop.webp', '/partners/']
+      ]],
+      ['Мобильный — 390 px', [
+        ['01 ИНАГРО Главная Моб', '5:7110', 'assets/01-mobile.webp', '/'],
+        ['03 ИНАГРО Продукция ингредиенты Моб', '5:998', 'assets/03-mobile.webp', '/ingredients/'],
+        ['04 ИНАГРО Продукция замороженная Моб', '5:1518', 'assets/04-mobile.webp', '/frozen-products/'],
+        ['09 ИНАГРО Контакты Моб', '5:3838', 'assets/09-mobile.webp', '/contacts/'],
+        ['10 ИНАГРО Решения снабжение кондитерских Моб', '5:4836', 'assets/10-mobile.webp', '/solutions/confectionery/'],
+        ['11 ИНАГРО Наши партнеры Моб', '5:6024', 'assets/11-mobile.webp', '/partners/']
+      ]]
+    ];
+    const storageKey = 'inagro-manual-review-v1';
+    const state = JSON.parse(localStorage.getItem(storageKey) || '{}');
+    const list = document.querySelector('#list');
+    let total = 0;
+
+    const save = () => localStorage.setItem(storageKey, JSON.stringify(state));
+    const figmaUrl = frame => `${figmaBase}${frame.replace(':', '-')}&p=f`;
+
+    for (const [groupName, screens] of groups) {
+      const section = document.createElement('section');
+      section.className = 'group';
+      section.innerHTML = `<h2 class="group-title">${groupName} <span class="meta">— ${screens.length}</span></h2><div class="cards"></div>`;
+      const cards = section.querySelector('.cards');
+
+      for (const [name, frame, screenshot, path] of screens) {
+        total += 1;
+        const number = total;
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.dataset.frame = frame;
+        card.innerHTML = `
+          <a class="screen-link" href="${screenshot}" target="_blank" rel="noopener" aria-label="Открыть скрин макета ${name}">
+            <img src="${screenshot}" alt="Скрин Figma: ${name}" loading="lazy" decoding="async">
+          </a>
+          <div class="card-body">
+            <div class="card-top">
+              <div class="number">${String(number).padStart(2, '0')}</div>
+              <div><h3 class="screen-name">${name}</h3><div class="node-id">Node ID: ${frame}</div></div>
+            </div>
+            <div class="links">
+              <a class="button figma-link" href="${figmaUrl(frame)}" target="_blank" rel="noopener">Открыть экран в Figma</a>
+              <a class="button site-link" href="${siteBase + path}" target="_blank" rel="noopener">Открыть реализацию</a>
+            </div>
+            <div class="review">
+              <button class="ready" type="button" aria-pressed="false">Готово</button>
+              <textarea aria-label="Комментарий к экрану ${number}" placeholder="Что проверить или исправить"></textarea>
+            </div>
+          </div>`;
+
+        const item = state[frame] || {};
+        const button = card.querySelector('.ready');
+        const note = card.querySelector('textarea');
+        button.setAttribute('aria-pressed', String(Boolean(item.done)));
+        note.value = item.note || '';
+        card.classList.toggle('done', Boolean(item.done));
+        button.addEventListener('click', () => {
+          state[frame] = {...state[frame], done: button.getAttribute('aria-pressed') !== 'true', note: note.value};
+          save();
+          refresh();
+        });
+        note.addEventListener('input', () => {
+          state[frame] = {...state[frame], done: button.getAttribute('aria-pressed') === 'true', note: note.value};
+          save();
+        });
+        cards.append(card);
+      }
+      list.append(section);
+    }
+
+    function refresh() {
+      let done = 0;
+      document.querySelectorAll('.card').forEach(card => {
+        const value = Boolean(state[card.dataset.frame]?.done);
+        card.querySelector('.ready').setAttribute('aria-pressed', String(value));
+        card.classList.toggle('done', value);
+        if (value) done += 1;
+      });
+      document.querySelector('#progress-text').textContent = `${done} из ${total}`;
+      document.querySelector('#progress-fill').style.width = `${done / total * 100}%`;
+    }
+
+    document.querySelector('#show-all').addEventListener('click', () => {
+      document.querySelectorAll('.card').forEach(card => card.hidden = false);
+    });
+    document.querySelector('#show-pending').addEventListener('click', () => {
+      document.querySelectorAll('.card').forEach(card => card.hidden = Boolean(state[card.dataset.frame]?.done));
+    });
+    document.querySelector('#export-json').addEventListener('click', () => {
+      let number = 0;
+      const screens = groups.flatMap(([group, items]) => items.map(([name, frame, screenshot, path]) => ({
+        number: ++number,
+        group,
+        name,
+        nodeId: frame,
+        figmaUrl: figmaUrl(frame),
+        screenshotUrl: new URL(screenshot, location.href).href,
+        siteUrl: siteBase + path,
+        done: Boolean(state[frame]?.done),
+        note: state[frame]?.note || ''
+      })));
+      const payload = {version: 1, exportedAt: new Date().toISOString(), source: location.href, screens};
+      const blob = new Blob([JSON.stringify(payload, null, 2) + '\n'], {type: 'application/json'});
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `inagro-review-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.append(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+    refresh();
+  </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "source": {
+    "fileKey": "jYm5eXVZnvn9LRjEDPr7fR",
+    "fileName": "ИНАГРО--Copy-",
+    "url": "https://www.figma.com/design/jYm5eXVZnvn9LRjEDPr7fR/ИНАГРО--Copy-?node-id=0-1",
+    "format": "WebP preview"
+  },
+  "siteBase": "https://inagro.wpmix.net",
+  "screens": [
+    {"name":"01 ИНАГРО Главная","nodeId":"5:6306","viewport":"desktop","screenshot":"assets/01-desktop.webp","path":"/"},
+    {"name":"03 ИНАГРО Продукция ингредиенты","nodeId":"5:610","viewport":"desktop","screenshot":"assets/03-desktop.webp","path":"/ingredients/"},
+    {"name":"04 ИНАГРО Продукция замороженная","nodeId":"5:1232","viewport":"desktop","screenshot":"assets/04-desktop.webp","path":"/frozen-products/"},
+    {"name":"09 ИНАГРО Контакты","nodeId":"5:3658","viewport":"desktop","screenshot":"assets/09-desktop.webp","path":"/contacts/"},
+    {"name":"10 ИНАГРО Решения снабжение кондитерских 1","nodeId":"5:3985","viewport":"desktop","screenshot":"assets/10-desktop.webp","path":"/solutions/confectionery/"},
+    {"name":"11 ИНАГРО Наши партнеры","nodeId":"5:5562","viewport":"desktop","screenshot":"assets/11-desktop.webp","path":"/partners/"},
+    {"name":"01 ИНАГРО Главная Моб","nodeId":"5:7110","viewport":"mobile","screenshot":"assets/01-mobile.webp","path":"/"},
+    {"name":"03 ИНАГРО Продукция ингредиенты Моб","nodeId":"5:998","viewport":"mobile","screenshot":"assets/03-mobile.webp","path":"/ingredients/"},
+    {"name":"04 ИНАГРО Продукция замороженная Моб","nodeId":"5:1518","viewport":"mobile","screenshot":"assets/04-mobile.webp","path":"/frozen-products/"},
+    {"name":"09 ИНАГРО Контакты Моб","nodeId":"5:3838","viewport":"mobile","screenshot":"assets/09-mobile.webp","path":"/contacts/"},
+    {"name":"10 ИНАГРО Решения снабжение кондитерских Моб","nodeId":"5:4836","viewport":"mobile","screenshot":"assets/10-mobile.webp","path":"/solutions/confectionery/"},
+    {"name":"11 ИНАГРО Наши партнеры Моб","nodeId":"5:6024","viewport":"mobile","screenshot":"assets/11-mobile.webp","path":"/partners/"}
+  ]
+}

@@ -7,17 +7,17 @@
   },
   "siteBase": "https://inagro.wpmix.net",
   "screens": [
-    {"name":"01 ИНАГРО Главная","nodeId":"5:6306","viewport":"desktop","screenshot":"assets/01-desktop.webp","path":"/"},
-    {"name":"03 ИНАГРО Продукция ингредиенты","nodeId":"5:610","viewport":"desktop","screenshot":"assets/03-desktop.webp","path":"/ingredients/"},
-    {"name":"04 ИНАГРО Продукция замороженная","nodeId":"5:1232","viewport":"desktop","screenshot":"assets/04-desktop.webp","path":"/frozen-products/"},
-    {"name":"09 ИНАГРО Контакты","nodeId":"5:3658","viewport":"desktop","screenshot":"assets/09-desktop.webp","path":"/contacts/"},
-    {"name":"10 ИНАГРО Решения снабжение кондитерских 1","nodeId":"5:3985","viewport":"desktop","screenshot":"assets/10-desktop.webp","path":"/solutions/confectionery/"},
-    {"name":"11 ИНАГРО Наши партнеры","nodeId":"5:5562","viewport":"desktop","screenshot":"assets/11-desktop.webp","path":"/partners/"},
-    {"name":"01 ИНАГРО Главная Моб","nodeId":"5:7110","viewport":"mobile","screenshot":"assets/01-mobile.webp","path":"/"},
-    {"name":"03 ИНАГРО Продукция ингредиенты Моб","nodeId":"5:998","viewport":"mobile","screenshot":"assets/03-mobile.webp","path":"/ingredients/"},
-    {"name":"04 ИНАГРО Продукция замороженная Моб","nodeId":"5:1518","viewport":"mobile","screenshot":"assets/04-mobile.webp","path":"/frozen-products/"},
-    {"name":"09 ИНАГРО Контакты Моб","nodeId":"5:3838","viewport":"mobile","screenshot":"assets/09-mobile.webp","path":"/contacts/"},
-    {"name":"10 ИНАГРО Решения снабжение кондитерских Моб","nodeId":"5:4836","viewport":"mobile","screenshot":"assets/10-mobile.webp","path":"/solutions/confectionery/"},
-    {"name":"11 ИНАГРО Наши партнеры Моб","nodeId":"5:6024","viewport":"mobile","screenshot":"assets/11-mobile.webp","path":"/partners/"}
+    {"name":"01 ИНАГРО Главная","nodeId":"5:6306","viewport":"desktop","figmaScreenshot":"assets/01-desktop.webp","promScreenshot":"assets/01-desktop-prom.webp","path":"/"},
+    {"name":"03 ИНАГРО Продукция ингредиенты","nodeId":"5:610","viewport":"desktop","figmaScreenshot":"assets/03-desktop.webp","promScreenshot":"assets/03-desktop-prom.webp","path":"/ingredients/"},
+    {"name":"04 ИНАГРО Продукция замороженная","nodeId":"5:1232","viewport":"desktop","figmaScreenshot":"assets/04-desktop.webp","promScreenshot":"assets/04-desktop-prom.webp","path":"/frozen-products/"},
+    {"name":"09 ИНАГРО Контакты","nodeId":"5:3658","viewport":"desktop","figmaScreenshot":"assets/09-desktop.webp","promScreenshot":"assets/09-desktop-prom.webp","path":"/contacts/"},
+    {"name":"10 ИНАГРО Решения снабжение кондитерских 1","nodeId":"5:3985","viewport":"desktop","figmaScreenshot":"assets/10-desktop.webp","promScreenshot":"assets/10-desktop-prom.webp","path":"/solutions/confectionery/"},
+    {"name":"11 ИНАГРО Наши партнеры","nodeId":"5:5562","viewport":"desktop","figmaScreenshot":"assets/11-desktop.webp","promScreenshot":"assets/11-desktop-prom.webp","path":"/partners/"},
+    {"name":"01 ИНАГРО Главная Моб","nodeId":"5:7110","viewport":"mobile","figmaScreenshot":"assets/01-mobile.webp","promScreenshot":"assets/01-mobile-prom.webp","path":"/"},
+    {"name":"03 ИНАГРО Продукция ингредиенты Моб","nodeId":"5:998","viewport":"mobile","figmaScreenshot":"assets/03-mobile.webp","promScreenshot":"assets/03-mobile-prom.webp","path":"/ingredients/"},
+    {"name":"04 ИНАГРО Продукция замороженная Моб","nodeId":"5:1518","viewport":"mobile","figmaScreenshot":"assets/04-mobile.webp","promScreenshot":"assets/04-mobile-prom.webp","path":"/frozen-products/"},
+    {"name":"09 ИНАГРО Контакты Моб","nodeId":"5:3838","viewport":"mobile","figmaScreenshot":"assets/09-mobile.webp","promScreenshot":"assets/09-mobile-prom.webp","path":"/contacts/"},
+    {"name":"10 ИНАГРО Решения снабжение кондитерских Моб","nodeId":"5:4836","viewport":"mobile","figmaScreenshot":"assets/10-mobile.webp","promScreenshot":"assets/10-mobile-prom.webp","path":"/solutions/confectionery/"},
+    {"name":"11 ИНАГРО Наши партнеры Моб","nodeId":"5:6024","viewport":"mobile","figmaScreenshot":"assets/11-mobile.webp","promScreenshot":"assets/11-mobile-prom.webp","path":"/partners/"}
   ]
 }

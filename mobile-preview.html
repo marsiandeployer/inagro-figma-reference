@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Просмотр мобильной версии ИНАГРО в viewport iPhone 13 Pro Max.">
+  <link rel="icon" href="data:,">
+  <title>ИНАГРО — iPhone 13 Pro Max</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #2b2f33;
+      --muted: #72777d;
+      --line: #dce2db;
+      --paper: #f3f5f1;
+      --white: #fff;
+      --green: #439e35;
+      --green-dark: #2f7827;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--paper);
+      color: var(--ink);
+      font: 14px/1.45 Arial, sans-serif;
+    }
+    a { color: var(--green-dark); text-underline-offset: 3px; }
+    a:focus-visible {
+      outline: 3px solid rgba(67, 158, 53, .28);
+      outline-offset: 2px;
+    }
+    main {
+      width: min(100%, 980px);
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    h1 { margin: 0 0 4px; font-size: 22px; line-height: 1.2; }
+    p { margin: 0; color: var(--muted); }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .button {
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #b9c5b6;
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 0 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .button:hover { border-color: var(--green); color: var(--green-dark); }
+    .device-wrap { width: 476px; max-width: 100%; margin: 0 auto; }
+    .device-shell {
+      position: relative;
+      width: 476px;
+      max-width: 100%;
+      overflow: hidden;
+      padding: 48px 24px 24px;
+      border-radius: 52px;
+      background: #202326;
+      box-shadow: 0 18px 48px rgba(20, 24, 27, .2);
+    }
+    .device-shell::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      width: 132px;
+      height: 28px;
+      border-radius: 18px;
+      background: #0d0f10;
+      transform: translateX(-50%);
+    }
+    .device-screen {
+      width: 428px;
+      height: 926px;
+      max-width: 100%;
+      overflow: hidden;
+      border-radius: 30px;
+      background: #fff;
+    }
+    iframe {
+      display: block;
+      width: 428px;
+      height: 926px;
+      border: 0;
+      background: #fff;
+      transform-origin: top left;
+    }
+    .size {
+      margin-top: 12px;
+      text-align: center;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    @media (max-width: 540px) {
+      main { padding: 16px; }
+      .topbar { align-items: flex-start; }
+      .device-shell { padding: 40px 12px 12px; border-radius: 38px; }
+      .device-screen { width: 100%; border-radius: 26px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="topbar">
+      <div>
+        <h1>iPhone 13 Pro Max</h1>
+        <p>Живая мобильная версия, viewport 428 × 926 CSS px.</p>
+      </div>
+      <div class="actions">
+        <a class="button" href="compare.html">Вернуться к сравнению</a>
+        <a class="button" id="open-direct" href="https://inagro.wpmix.net/" target="_blank" rel="noopener">Открыть пром напрямую</a>
+      </div>
+    </div>
+    <div class="device-wrap">
+      <div class="device-shell" aria-label="Предпросмотр iPhone 13 Pro Max">
+        <div class="device-screen">
+          <iframe id="preview" title="Живая мобильная версия ИНАГРО"></iframe>
+        </div>
+      </div>
+      <div class="size">428 × 926 CSS px</div>
+    </div>
+  </main>
+  <script>
+    const siteBase = 'https://inagro.wpmix.net';
+    const allowedPaths = new Set([
+      '/',
+      '/ingredients/',
+      '/frozen-products/',
+      '/contacts/',
+      '/solutions/confectionery/',
+      '/partners/'
+    ]);
+    const requestedPath = new URLSearchParams(location.search).get('path');
+    const path = allowedPaths.has(requestedPath) ? requestedPath : '/';
+    const siteUrl = siteBase + path;
+    const frame = document.querySelector('#preview');
+    const screen = document.querySelector('.device-screen');
+
+    frame.src = siteUrl;
+    document.querySelector('#open-direct').href = siteUrl;
+
+    const resizeFrame = () => {
+      const scale = Math.min(1, screen.clientWidth / 428);
+      frame.style.transform = `scale(${scale})`;
+      screen.style.height = `${926 * scale}px`;
+    };
+
+    new ResizeObserver(resizeFrame).observe(screen);
+    resizeFrame();
+  </script>
+</body>
+</html>

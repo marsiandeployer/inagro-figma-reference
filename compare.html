@@ -28,9 +28,9 @@
       color: var(--ink);
       font: 14px/1.45 Arial, sans-serif;
     }
-    button, select, textarea { font: inherit; }
+    button, textarea { font: inherit; }
     a { color: var(--green-dark); text-underline-offset: 3px; }
-    a:focus-visible, button:focus-visible, select:focus-visible, textarea:focus-visible {
+    a:focus-visible, button:focus-visible, textarea:focus-visible {
       outline: 3px solid rgba(67, 158, 53, .28);
       outline-offset: 2px;
     }
@@ -75,87 +75,6 @@
     }
     .button:hover, button:hover { border-color: var(--green); color: var(--green-dark); }
     button:active { transform: translateY(1px); }
-    .iphone-link { border-color: var(--green); background: var(--green); color: #fff; }
-    .iphone-link:hover { background: var(--green-dark); color: #fff; }
-    .device-preview {
-      margin-bottom: 36px;
-      padding: 24px;
-      scroll-margin-top: 112px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--white);
-      box-shadow: var(--shadow);
-    }
-    .device-heading { margin: 0 0 6px; font-size: 21px; line-height: 1.25; }
-    .device-description { max-width: 760px; margin: 0; color: var(--muted); }
-    .device-controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: end;
-      margin: 18px 0 22px;
-    }
-    .device-field { display: grid; gap: 6px; min-width: min(100%, 320px); }
-    .device-field span { font-size: 12px; font-weight: 700; color: var(--muted); }
-    select {
-      min-height: 40px;
-      border: 1px solid #b9c5b6;
-      border-radius: 8px;
-      padding: 0 34px 0 12px;
-      background: #fff;
-      color: var(--ink);
-    }
-    .device-stage {
-      display: grid;
-      grid-template-columns: minmax(0, 476px) minmax(240px, 1fr);
-      gap: 28px;
-      align-items: start;
-      min-width: 0;
-    }
-    .device-shell {
-      position: relative;
-      width: 476px;
-      max-width: 100%;
-      min-width: 0;
-      overflow: hidden;
-      padding: 48px 24px 24px;
-      border-radius: 52px;
-      background: #202326;
-      box-shadow: 0 18px 48px rgba(20, 24, 27, .2);
-    }
-    .device-shell::before {
-      content: "";
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      width: 132px;
-      height: 28px;
-      border-radius: 18px;
-      background: #0d0f10;
-      transform: translateX(-50%);
-    }
-    .device-screen {
-      width: 428px;
-      height: 926px;
-      max-width: 100%;
-      min-width: 0;
-      overflow: hidden;
-      border-radius: 30px;
-      background: #fff;
-    }
-    .device-frame { display: block; width: 428px; height: 926px; border: 0; background: #fff; }
-    .device-notes { min-width: 0; padding-top: 12px; }
-    .device-notes h3 { margin: 0 0 8px; font-size: 17px; }
-    .device-notes p { margin: 0 0 10px; color: var(--muted); }
-    .device-size {
-      display: inline-flex;
-      margin-bottom: 18px;
-      border-radius: 999px;
-      padding: 7px 11px;
-      background: var(--green-soft);
-      color: var(--green-dark);
-      font-weight: 700;
-    }
     .group { margin-bottom: 36px; scroll-margin-top: 112px; }
     .group-title {
       margin: 0 0 14px;
@@ -245,7 +164,6 @@
     .links .button { flex: 1 1 190px; }
     .figma-link { border-color: #bcaef2; }
     .site-link { border-color: #a9d7a1; }
-    .emulator-link { border-color: var(--green); color: var(--green-dark); }
     .review { display: grid; grid-template-columns: 118px 1fr; gap: 10px; align-items: start; }
     .ready[aria-pressed="true"] { border-color: var(--green); background: var(--green); color: #fff; }
     textarea {
@@ -262,20 +180,6 @@
       .bar { grid-template-columns: 1fr; gap: 14px; }
       .progress { min-width: 0; }
       .cards { grid-template-columns: 1fr; }
-      .device-stage { grid-template-columns: minmax(0, 1fr); }
-    }
-    @media (max-width: 540px) {
-      .device-preview { padding: 16px; }
-      .device-shell { width: 100%; padding: 40px 12px 12px; border-radius: 38px; }
-      .device-screen {
-        width: 100%;
-        border-radius: 26px;
-      }
-      .device-frame {
-        width: 428px;
-        height: 926px;
-        transform-origin: top left;
-      }
     }
     @media (max-width: 520px) {
       .bar, main { padding-left: 16px; padding-right: 16px; }
@@ -308,44 +212,10 @@
   <main>
     <div class="tools">
       <a class="button" href="https://www.figma.com/design/jYm5eXVZnvn9LRjEDPr7fR/ИНАГРО--Copy-?node-id=0-1" target="_blank" rel="noopener">Открыть весь файл Figma</a>
-      <a class="button iphone-link" href="#iphone-preview">Смотреть пром как на iPhone 13 Pro Max</a>
       <button type="button" id="show-all">Показать все</button>
       <button type="button" id="show-pending">Только непроверенные</button>
       <button type="button" id="export-json">Скачать JSON</button>
     </div>
-    <section class="device-preview" id="iphone-preview" aria-labelledby="iphone-title">
-      <h2 class="device-heading" id="iphone-title">Живой пром на iPhone 13 Pro Max</h2>
-      <p class="device-description">Выберите страницу и прокручивайте её внутри телефона. Контент открывается с реального прома в мобильном viewport 428 × 926 CSS px.</p>
-      <div class="device-controls">
-        <label class="device-field">
-          <span>Страница</span>
-          <select id="iphone-page">
-            <option value="/">Главная</option>
-            <option value="/ingredients/">Продукция — ингредиенты</option>
-            <option value="/frozen-products/">Продукция — замороженная</option>
-            <option value="/contacts/">Контакты</option>
-            <option value="/solutions/confectionery/">Решения — кондитерские</option>
-            <option value="/partners/">Наши партнёры</option>
-          </select>
-        </label>
-        <a class="button" id="open-iphone-page" href="https://inagro.wpmix.net/" target="_blank" rel="noopener">1. Войти на пром отдельно</a>
-        <button type="button" id="reload-iphone">2. Обновить в рамке</button>
-      </div>
-      <div class="device-stage">
-        <div class="device-shell" aria-label="Предпросмотр iPhone 13 Pro Max">
-          <div class="device-screen">
-            <iframe class="device-frame" id="iphone-frame" src="https://inagro.wpmix.net/" title="Живой пром ИНАГРО в viewport iPhone 13 Pro Max" loading="lazy"></iframe>
-          </div>
-        </div>
-        <div class="device-notes">
-          <div class="device-size">428 × 926 CSS px</div>
-          <h3>Что показывает этот режим</h3>
-          <p>Это живая адаптивная вёрстка прома, а не статичный скриншот. Ширина окна внутри рамки соответствует портретному iPhone 13 Pro Max, поэтому срабатывают мобильные стили сайта.</p>
-          <p>Если экран пустой, нажмите «1. Войти на пром отдельно», войдите в защищённый preview, вернитесь сюда и нажмите «2. Обновить в рамке». Страница сравнения не запрашивает и не сохраняет данные входа.</p>
-          <p>Интерфейс Safari, сенсорные жесты и плотность физических пикселей браузерная рамка не имитирует. Для визуальной проверки геометрии и прокрутки на десктопе используется корректный CSS viewport устройства.</p>
-        </div>
-      </div>
-    </section>
     <div id="list"></div>
   </main>
   <script>
@@ -372,25 +242,11 @@
     const storageKey = 'inagro-manual-review-v1';
     const state = JSON.parse(localStorage.getItem(storageKey) || '{}');
     const list = document.querySelector('#list');
-    const iphoneFrame = document.querySelector('#iphone-frame');
-    const iphonePage = document.querySelector('#iphone-page');
-    const openIphonePage = document.querySelector('#open-iphone-page');
-    const iphoneScreen = document.querySelector('.device-screen');
     let total = 0;
 
     const save = () => localStorage.setItem(storageKey, JSON.stringify(state));
     const figmaUrl = frame => `${figmaBase}${frame.replace(':', '-')}&p=f`;
-    const setIphonePage = path => {
-      const url = siteBase + path;
-      iphonePage.value = path;
-      iphoneFrame.src = url;
-      openIphonePage.href = url;
-    };
-    const resizeIphoneFrame = () => {
-      const scale = Math.min(1, iphoneScreen.clientWidth / 428);
-      iphoneFrame.style.transform = `scale(${scale})`;
-      iphoneScreen.style.height = `${926 * scale}px`;
-    };
+    const mobilePreviewUrl = path => `mobile-preview.html?path=${encodeURIComponent(path)}`;
 
     for (const [groupName, screens] of groups) {
       const section = document.createElement('section');
@@ -427,8 +283,7 @@
             </div>
             <div class="links">
               <a class="button figma-link" href="${figmaUrl(frame)}" target="_blank" rel="noopener">Открыть экран в Figma</a>
-              <a class="button site-link" href="${siteBase + path}" target="_blank" rel="noopener">Открыть реализацию</a>
-              ${isMobileGroup ? `<button class="button emulator-link" type="button" data-iphone-path="${path}">Смотреть на iPhone 13 Pro Max</button>` : ''}
+              <a class="button site-link" href="${isMobileGroup ? mobilePreviewUrl(path) : siteBase + path}" target="_blank" rel="noopener">Открыть реализацию</a>
             </div>
             <div class="review">
               <button class="ready" type="button" aria-pressed="false">Готово</button>
@@ -450,10 +305,6 @@
         note.addEventListener('input', () => {
           state[frame] = {...state[frame], done: button.getAttribute('aria-pressed') === 'true', note: note.value};
           save();
-        });
-        card.querySelector('[data-iphone-path]')?.addEventListener('click', event => {
-          setIphonePage(event.currentTarget.dataset.iphonePath);
-          document.querySelector('#iphone-preview').scrollIntoView();
         });
         cards.append(card);
       }
@@ -503,12 +354,6 @@
       link.remove();
       window.setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
-    iphonePage.addEventListener('change', () => setIphonePage(iphonePage.value));
-    document.querySelector('#reload-iphone').addEventListener('click', () => {
-      iphoneFrame.src = iphoneFrame.src;
-    });
-    new ResizeObserver(resizeIphoneFrame).observe(iphoneScreen);
-    resizeIphoneFrame();
     refresh();
   </script>
 </body>

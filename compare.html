@@ -231,7 +231,7 @@
         ['11 ИНАГРО Наши партнеры', '5:5562', 'assets/11-desktop.webp', 'assets/11-desktop-prom.webp', '/partners/']
       ]],
       ['Мобильный — 390 px', [
-        ['01 ИНАГРО Главная Моб', '5:7110', 'assets/01-mobile.webp', 'assets/01-mobile-prom.webp', '/'],
+        ['01 ИНАГРО Главная Моб', '5:7110', 'assets/01-mobile.webp', 'assets/01-mobile-prom-preview.png', '/'],
         ['03 ИНАГРО Продукция ингредиенты Моб', '5:998', 'assets/03-mobile.webp', 'assets/03-mobile-prom.webp', '/ingredients/'],
         ['04 ИНАГРО Продукция замороженная Моб', '5:1518', 'assets/04-mobile.webp', 'assets/04-mobile-prom.webp', '/frozen-products/'],
         ['09 ИНАГРО Контакты Моб', '5:3838', 'assets/09-mobile.webp', 'assets/09-mobile-prom.webp', '/contacts/'],
@@ -258,6 +258,9 @@
       for (const [name, frame, figmaScreenshot, promScreenshot, path] of screens) {
         total += 1;
         const number = total;
+        const promFullScreenshot = isMobileGroup
+          ? promScreenshot.replace(/(?:-preview)?\.(?:webp|png)$/, '.png')
+          : promScreenshot;
         const card = document.createElement('article');
         card.className = 'card';
         card.dataset.frame = frame;
@@ -271,7 +274,7 @@
             </div>
             <div class="screen">
               <div class="screen-kind">Пром</div>
-              <a class="screen-link" href="${promScreenshot}" target="_blank" rel="noopener" aria-label="Открыть свежий скрин прома ${name}">
+              <a class="screen-link" href="${promFullScreenshot}" target="_blank" rel="noopener" aria-label="Открыть свежий полноразмерный скрин прома ${name}">
                 <img src="${promScreenshot}" alt="Свежий скрин прома: ${name}" loading="lazy" decoding="async">
               </a>
             </div>
@@ -331,18 +334,23 @@
     });
     document.querySelector('#export-json').addEventListener('click', () => {
       let number = 0;
-      const screens = groups.flatMap(([group, items]) => items.map(([name, frame, figmaScreenshot, promScreenshot, path]) => ({
-        number: ++number,
-        group,
-        name,
-        nodeId: frame,
-        figmaUrl: figmaUrl(frame),
-        figmaScreenshotUrl: new URL(figmaScreenshot, location.href).href,
-        promScreenshotUrl: new URL(promScreenshot, location.href).href,
-        siteUrl: siteBase + path,
-        done: Boolean(state[frame]?.done),
-        note: state[frame]?.note || ''
-      })));
+      const screens = groups.flatMap(([group, items]) => items.map(([name, frame, figmaScreenshot, promScreenshot, path]) => {
+        const promFullScreenshot = group.startsWith('Мобильный')
+          ? promScreenshot.replace(/(?:-preview)?\.(?:webp|png)$/, '.png')
+          : promScreenshot;
+        return {
+          number: ++number,
+          group,
+          name,
+          nodeId: frame,
+          figmaUrl: figmaUrl(frame),
+          figmaScreenshotUrl: new URL(figmaScreenshot, location.href).href,
+          promScreenshotUrl: new URL(promFullScreenshot, location.href).href,
+          siteUrl: siteBase + path,
+          done: Boolean(state[frame]?.done),
+          note: state[frame]?.note || ''
+        };
+      }));
       const payload = {version: 1, exportedAt: new Date().toISOString(), source: location.href, screens};
       const blob = new Blob([JSON.stringify(payload, null, 2) + '\n'], {type: 'application/json'});
       const url = URL.createObjectURL(blob);

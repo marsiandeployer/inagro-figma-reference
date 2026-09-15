@@ -246,7 +246,10 @@
 
     const save = () => localStorage.setItem(storageKey, JSON.stringify(state));
     const figmaUrl = frame => `${figmaBase}${frame.replace(':', '-')}&p=f`;
-    const mobilePreviewUrl = path => `mobile-preview.html?path=${encodeURIComponent(path)}`;
+    const mobilePreviewUrl = (name, frame, screenshot, path) => {
+      const params = new URLSearchParams({name, frame, screenshot, path});
+      return `mobile-preview.html?${params.toString()}`;
+    };
 
     for (const [groupName, screens] of groups) {
       const section = document.createElement('section');
@@ -286,7 +289,7 @@
             </div>
             <div class="links">
               <a class="button figma-link" href="${figmaUrl(frame)}" target="_blank" rel="noopener">Открыть экран в Figma</a>
-              <a class="button site-link" href="${isMobileGroup ? mobilePreviewUrl(path) : siteBase + path}" target="_blank" rel="noopener">Открыть реализацию</a>
+              <a class="button site-link" href="${isMobileGroup ? mobilePreviewUrl(name, frame, figmaScreenshot, path) : siteBase + path}" target="_blank" rel="noopener">${isMobileGroup ? 'Открыть сравнение Figma — пром' : 'Открыть реализацию'}</a>
             </div>
             <div class="review">
               <button class="ready" type="button" aria-pressed="false">Готово</button>

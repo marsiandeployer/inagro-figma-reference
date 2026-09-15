@@ -60,16 +60,63 @@
       text-decoration: none;
     }
     .button:hover { border-color: var(--green); color: var(--green-dark); }
-    .device-wrap { width: 476px; max-width: 100%; margin: 0 auto; }
+    .calibration {
+      max-width: 680px;
+      margin: 0 auto 24px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--white);
+    }
+    .calibration-title { margin: 0 0 4px; font-weight: 700; }
+    .calibration-help { margin-bottom: 14px; }
+    .calibration-controls {
+      display: grid;
+      grid-template-columns: auto minmax(180px, 1fr) auto auto;
+      gap: 10px;
+      align-items: center;
+    }
+    .calibration-controls label { font-weight: 700; }
+    input[type="range"] { width: 100%; accent-color: var(--green); }
+    output {
+      min-width: 54px;
+      color: var(--green-dark);
+      font-weight: 700;
+      text-align: right;
+    }
+    button {
+      min-height: 36px;
+      border: 1px solid #b9c5b6;
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 0 12px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    button:hover { border-color: var(--green); color: var(--green-dark); }
+    button:focus-visible, input:focus-visible {
+      outline: 3px solid rgba(67, 158, 53, .28);
+      outline-offset: 2px;
+    }
+    .device-area { overflow-x: auto; padding: 0 0 4px; }
+    .device-wrap {
+      position: relative;
+      width: 422px;
+      height: 869px;
+      margin: 0 auto;
+    }
     .device-shell {
       position: relative;
       width: 476px;
-      max-width: 100%;
+      height: 980px;
       overflow: hidden;
-      padding: 48px 24px 24px;
+      padding: 38px 24px 16px;
       border-radius: 52px;
       background: #202326;
       box-shadow: 0 18px 48px rgba(20, 24, 27, .2);
+      transform-origin: top left;
     }
     .device-shell::before {
       content: "";
@@ -85,7 +132,6 @@
     .device-screen {
       width: 428px;
       height: 926px;
-      max-width: 100%;
       overflow: hidden;
       border-radius: 30px;
       background: #fff;
@@ -96,7 +142,6 @@
       height: 926px;
       border: 0;
       background: #fff;
-      transform-origin: top left;
     }
     .size {
       margin-top: 12px;
@@ -104,11 +149,13 @@
       color: var(--muted);
       font-weight: 700;
     }
+    .size strong { color: var(--ink); }
     @media (max-width: 540px) {
       main { padding: 16px; }
       .topbar { align-items: flex-start; }
-      .device-shell { padding: 40px 12px 12px; border-radius: 38px; }
-      .device-screen { width: 100%; border-radius: 26px; }
+      .calibration-controls { grid-template-columns: 1fr auto; }
+      .calibration-controls label { grid-column: 1 / -1; }
+      .calibration-controls input { min-width: 0; }
     }
   </style>
 </head>
@@ -117,21 +164,33 @@
     <div class="topbar">
       <div>
         <h1>iPhone 13 Pro Max</h1>
-        <p>Живая мобильная версия, viewport 428 × 926 CSS px.</p>
+        <p>Живая мобильная версия, viewport 428 × 926 CSS px внутри корпуса реального формата.</p>
       </div>
       <div class="actions">
         <a class="button" href="compare.html">Вернуться к сравнению</a>
         <a class="button" id="open-direct" href="https://inagro.wpmix.net/" target="_blank" rel="noopener">Открыть пром напрямую</a>
       </div>
     </div>
-    <div class="device-wrap">
-      <div class="device-shell" aria-label="Предпросмотр iPhone 13 Pro Max">
-        <div class="device-screen">
-          <iframe id="preview" title="Живая мобильная версия ИНАГРО"></iframe>
+    <section class="calibration" aria-labelledby="calibration-title">
+      <h2 class="calibration-title" id="calibration-title">Точный размер на вашем мониторе</h2>
+      <p class="calibration-help">Приложите iPhone к рамке и подвиньте ползунок до совпадения ширины. Настройка сохранится в этом браузере.</p>
+      <div class="calibration-controls">
+        <label for="device-scale">Подгонка размера</label>
+        <input id="device-scale" type="range" min="70" max="110" step="0.5" value="88.5">
+        <output id="device-scale-value" for="device-scale">88,5%</output>
+        <button id="reset-scale" type="button">Сбросить</button>
+      </div>
+    </section>
+    <div class="device-area">
+      <div class="device-wrap" id="device-wrap">
+        <div class="device-shell" id="device-shell" aria-label="Предпросмотр iPhone 13 Pro Max">
+          <div class="device-screen">
+            <iframe id="preview" title="Живая мобильная версия ИНАГРО"></iframe>
+          </div>
         </div>
       </div>
-      <div class="size">428 × 926 CSS px</div>
     </div>
+    <div class="size"><strong>Корпус: 78,1 × 160,8 мм</strong> · viewport: 428 × 926 CSS px</div>
   </main>
   <script>
     const siteBase = 'https://inagro.wpmix.net';
@@ -147,19 +206,37 @@
     const path = allowedPaths.has(requestedPath) ? requestedPath : '/';
     const siteUrl = siteBase + path;
     const frame = document.querySelector('#preview');
-    const screen = document.querySelector('.device-screen');
+    const shell = document.querySelector('#device-shell');
+    const wrap = document.querySelector('#device-wrap');
+    const scaleControl = document.querySelector('#device-scale');
+    const scaleValue = document.querySelector('#device-scale-value');
+    const scaleStorageKey = 'inagro-iphone-13-pro-max-scale-v1';
+    const defaultScalePercent = 88.5;
+    const shellWidth = 476;
+    const shellHeight = 980;
 
     frame.src = siteUrl;
     document.querySelector('#open-direct').href = siteUrl;
 
-    const resizeFrame = () => {
-      const scale = Math.min(1, screen.clientWidth / 428);
-      frame.style.transform = `scale(${scale})`;
-      screen.style.height = `${926 * scale}px`;
+    const savedScale = Number.parseFloat(localStorage.getItem(scaleStorageKey));
+    const initialScale = Number.isFinite(savedScale)
+      ? Math.min(110, Math.max(70, savedScale))
+      : defaultScalePercent;
+
+    const applyScale = value => {
+      const percent = Number.parseFloat(value);
+      const scale = percent / 100;
+      shell.style.transform = `scale(${scale})`;
+      wrap.style.width = `${shellWidth * scale}px`;
+      wrap.style.height = `${shellHeight * scale}px`;
+      scaleValue.textContent = `${percent.toLocaleString('ru-RU')}%`;
+      scaleControl.value = String(percent);
+      localStorage.setItem(scaleStorageKey, String(percent));
     };
 
-    new ResizeObserver(resizeFrame).observe(screen);
-    resizeFrame();
+    scaleControl.addEventListener('input', event => applyScale(event.target.value));
+    document.querySelector('#reset-scale').addEventListener('click', () => applyScale(defaultScalePercent));
+    applyScale(initialScale);
   </script>
 </body>
 </html>
